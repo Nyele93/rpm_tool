@@ -1,0 +1,21 @@
+#!/bin/bash
+#
+# Simple script that would be compiled into an rpm package
+
+echo "=========================================="
+echo "This is an RPM package for Michael's demo."
+echo "==========================================" 
+echo
+#check for existing DB service and if it  is running
+
+if [[ -d "/etc/my.cnf.d" || -f "/etc/my.cnf" || -d "/etc/mysql/" ]]; then
+	echo "result: Existing installation detected. Checking service status"
+	UP=$(service mysql status|grep 'running'| wc -l)
+	if [ "$UP" -eq 0 ]; then echo "result: DB Service is stopped"
+	else echo "result: DB Service is running"
+	fi
+else
+	echo "result: No Database previously installed"
+	echo "----------------------------------------"
+fi
+echo 
